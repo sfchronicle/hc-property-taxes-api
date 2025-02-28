@@ -12,6 +12,7 @@ group_cols = ['tot_mkt_val_2023_bin', 'neighborhood_grp_2024', 'neighborhood_grp
               'stories_2024_bin', 'stories_2023_bin']
 
 app = FastAPI()
+master = pd.read_parquet('https://sfc-project-files.s3.amazonaws.com/tx-data/hc-property-taxes/master.gzip')
 
 def get_address_data(master, address: str, city: str) -> Dict[str, Any]:
     """Fetches address-related property data."""
@@ -39,6 +40,5 @@ async def root():
 
 @app.get("/get_address_data")
 def fetch_address_data(address: str, city: str):
-    master = pd.read_parquet('https://sfc-project-files.s3.amazonaws.com/tx-data/hc-property-taxes/master.gzip')
     """API endpoint to retrieve property data by address and city."""
     return get_address_data(master, address, city)
