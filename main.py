@@ -1,14 +1,46 @@
-from typing import Optional
+from typing import Optional, Dict, Any
+from fastapi import FastAPI, HTTPException
+import pandas as pd
 
-from fastapi import FastAPI
+## GLOBAL VARS
+id_cols = ['acct', 'owner_2024', 'address_2024', 'tot_mkt_val_2024', 'tot_mkt_val_2023', 
+           'yr_built_2024', 'yr_remodel_2024', 'bed_2024', 'bed_2023', 'bath_2024', 'bath_2023', 
+           'stories_2024', 'stories_2023']
+group_cols = ['tot_mkt_val_2023_bin', 'neighborhood_grp_2024', 'neighborhood_grp_2023', 
+              'bld_grade_2024', 'bld_grade_2023', 'yr_built_2024_bin', 'yr_remodel_2024_bin', 
+              'bed_2024_bin', 'bed_2023_bin', 'bath_2024_bin', 'bath_2023_bin', 
+              'stories_2024_bin', 'stories_2023_bin']
+
+# Load the data from S3
+master = pd.read_parquet('https://sfc-project-files.s3.amazonaws.com/tx-data/hc-property-taxes/master.gzip')
 
 app = FastAPI()
 
+def get_address_data(address: str, city: str) -> Dict[str, Any]:
+    """Fetches address-related property data."""
+
+    address = address.upper()
+    city = city.upper()
+    print(city)
+
+    acct_info = master[(master["address_2024"] == address.upper) & (master["city_2024"] == city)]
+
+    if acct_info.empty:
+        raise HTTPException(status_code=404, detail="No data found for the given address and city.")
+
+    data = {
+        "About this home": acct_info[id_cols].to_dict(orient="records")[0],
+        "Matching criteria": acct_info[["group1_id"] + group_cols].to_dict(orient="records")[0],
+        "Matches": master[master["group1_id"] == data["Matching criteria"]["group1_id"]][id_cols].to_dict(orient="records"),
+    }
+
+    return data
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/get_address_data")
+def fetch_address_data(address: str, city: str):
+    """API endpoint to retrieve property data by address and city."""
+    return get_address_data(address, city)
