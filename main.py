@@ -16,8 +16,8 @@ app = FastAPI()
 def get_address_data(address: str, city: str, zip: int) -> Dict[str, Any]:
     """Fetches address-related property data."""
 
-    address = address.upper()
-    city = city.upper()
+    address = address.upper().strip()
+    city = city.upper().strip()
 
     master = pd.read_parquet(f'https://sfc-project-files.s3.amazonaws.com/tx-data/hc-property-taxes/master_{zip}.gzip')
     acct_info = master[(master["address_2024"] == address) & (master["city_2024"] == city)]
