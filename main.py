@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 
-# Define allowed origins (update with your frontend URL when deployed)
+# Define allowed origins
 origins = [
     "http://localhost:8000",  # React/Vue/Angular running locally
     "http://127.0.0.1:8000",   # Alternative local address
@@ -24,10 +24,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allows specific origins
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all HTTP methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_address_data(address: str, city: str, zip: int) -> Dict[str, Any]:
