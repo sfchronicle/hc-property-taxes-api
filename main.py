@@ -1,6 +1,15 @@
 from typing import Optional, Dict, Any
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
+
+# Define allowed origins (update with your frontend URL when deployed)
+origins = [
+    "http://localhost:8000",  # React/Vue/Angular running locally
+    "http://127.0.0.1:8000",   # Alternative local address
+    "http://127.0.0.1:8081",   # Alternative local address
+    "https://www.houstonchronicle.com/",  # Deployed frontend
+]
 
 ## GLOBAL VARS
 id_cols = ['acct', 'owner_2024', 'address_2024', 'city_2024', 'zip_2024', 'tot_mkt_val_2024', 'tot_mkt_val_2023', 'new_construction_val_2024',
@@ -12,6 +21,14 @@ group_cols = ['tot_mkt_val_2023_bin', 'neighborhood_grp_2024', 'neighborhood_grp
               'stories_2024_bin', 'stories_2023_bin']
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows specific origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 def get_address_data(address: str, city: str, zip: int) -> Dict[str, Any]:
     """Fetches address-related property data."""
