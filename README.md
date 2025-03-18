@@ -42,7 +42,7 @@ Navigate to the project directory where the Dockerfile is located and run:
 
 ### 3️⃣ Run the Container
 
-`docker run -d -p 8081:8081 --name tax-data-api hc-property-taxes-api`
+`docker run -d -p 8081:8000 --name tax-data-api hc-property-taxes-api`
 
 ### 4️⃣ Verify the Running Container
 
