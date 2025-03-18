@@ -25,3 +25,47 @@ Or simply click:
 ## Thanks
 
 Thanks to [Harish](https://harishgarg.com) for the [inspiration to create a FastAPI quickstart for Render](https://twitter.com/harishkgarg/status/1435084018677010434) and for some sample code!
+
+
+---
+
+## Running Locally on Rancher Desktop
+
+### 1️⃣ Install Rancher Desktop
+
+Download and install Rancher Desktop
+Ensure that Docker runtime is enabled
+
+### 2️⃣ Build the Docker Image
+Navigate to the project directory where the Dockerfile is located and run:
+`docker build -t hc-property-taxes-api .`
+
+### 3️⃣ Run the Container
+
+`docker run -d -p 8081:8081 --name tax-data-api hc-property-taxes-api`
+
+### 4️⃣ Verify the Running Container
+
+To check if the container is running:
+
+`docker ps`
+
+You should see tax-appeal-api running.
+
+### 5️⃣ Access the API Locally
+
+Open your browser or use Postman:http://localhost:8081/docs (Swagger UI)
+
+Or test using curl:
+
+`curl http://localhost:8081`
+
+### 6️⃣ Stopping and Removing the Container
+
+To stop the container:
+
+`docker stop tax-data-api`
+
+To remove the container:
+
+`docker rm tax-data-api`
