@@ -42,7 +42,7 @@ Navigate to the project directory where the Dockerfile is located and run:
 
 ### 3️⃣ Run the Container
 
-`docker run -d -p 8081:8000 --name tax-data-api hc-property-taxes-api`
+`docker run -d -p 8000:8081 --name tax-data-api hc-property-taxes-api`
 
 ### 4️⃣ Verify the Running Container
 
@@ -54,11 +54,11 @@ You should see tax-appeal-api running.
 
 ### 5️⃣ Access the API Locally
 
-Open your browser or use Postman:http://localhost:8081/docs (Swagger UI)
+Open your browser or use Postman:http://localhost:8000/docs (Swagger UI)
 
 Or test using curl:
 
-`curl http://localhost:8081`
+`curl http://localhost:8000`
 
 ### 6️⃣ Stopping and Removing the Container
 
