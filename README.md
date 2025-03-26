@@ -69,3 +69,40 @@ To stop the container:
 To remove the container:
 
 `docker rm tax-data-api`
+
+---
+
+## Deploying on devhub01 and devhub02
+
+The application is deployed on two DevHub Rackspace servers: [devhub01](devhub01.dfw3.hearstnp.com) and [devhub02](devhub02.dfw3.hearstnp.com). _Repeat the following steps on both servers!_
+
+**Prerequisites:**
+
+- A user account on devhub1 and devhub2.
+- A github ssh key in your user folder on devhub1 and devhub2.
+    - Test by logging into the server and running: `ssh -T git@github.com`
+    - If that doesn't work, SFTP/copy your ssh `config`, `id_ed25519`, and `id_ed25519.pub` files to your .ssh folder on the server (`/home/<user-name>/.ssh`)
+
+**Steps to deploy:**
+_Repeat the following steps on both servers!_
+
+1. SSH into the server: `ssh devhub1`
+2. Navigate to the project directory: `cd /var/www/deploy/public/hc-property-taxes-api`
+3. Pull the latest from Github: `git pull origin main`
+4. Restart the docker container:
+  `docker stop tax-data-api`
+  `docker rm tax-data-api`
+  `docker build -t hc-property-taxes-api .`
+  `docker run -d -p 8080:8080 --restart=always --name tax-data-api hc-property-taxes-api`
+5. Verify the container is running: `docker ps`
+6. _Repeat these steps on devhub2._
+
+
+**One-time setup:**
+_Remember to set this up on both servers!_
+
+- Copy the following two files to the project folder (`/var/www/deploy/public/hc-property-taxes-api`) via SFTP:
+    - .env
+    - bad_words.txt
+
+---
