@@ -7,8 +7,11 @@ import ast
 # Define allowed origins
 origins = [
     "http://localhost:8000",  # React/Vue/Angular running locally
+    "https://localhost:8000", 
     "http://127.0.0.1:8000",   # Alternative local address
+    "https://127.0.0.1:8000",
     "http://127.0.0.1:8081",   # Alternative local address
+    "https://127.0.0.1:8081",
     "https://www.houstonchronicle.com/",  # Deployed frontend
 ]
 
