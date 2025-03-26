@@ -89,20 +89,13 @@ _Repeat the following steps on both servers!_
 1. SSH into the server: `ssh devhub1`
 2. Navigate to the project directory: `cd /var/www/deploy/public/hc-property-taxes-api`
 3. Pull the latest from Github: `git pull origin main`
-4. Restart the docker container:
-  `docker stop tax-data-api`
-  `docker rm tax-data-api`
-  `docker build -t hc-property-taxes-api .`
-  `docker run -d -p 8080:8080 --restart=always --name tax-data-api hc-property-taxes-api`
+4. Restart the docker container:<br />
+  `docker stop tax-data-api`<br />
+  `docker rm tax-data-api`<br />
+  `docker build -t hc-property-taxes-api .`<br />
+  `docker run -d -p 8081:8000 --restart=always --name tax-data-api hc-property-taxes-api`
 5. Verify the container is running: `docker ps`
 6. _Repeat these steps on devhub2._
 
-
-**One-time setup:**
-_Remember to set this up on both servers!_
-
-- Copy the following two files to the project folder (`/var/www/deploy/public/hc-property-taxes-api`) via SFTP:
-    - .env
-    - bad_words.txt
 
 ---
