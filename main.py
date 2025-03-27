@@ -12,7 +12,7 @@ origins = [
     "https://127.0.0.1:8000",
     "http://127.0.0.1:8081",   # Alternative local address
     "https://127.0.0.1:8081",
-    "https://www.houstonchronicle.com/",  # Deployed frontend
+    "https://www.houstonchronicle.com",  # Deployed frontend
 ]
 
 app = FastAPI()
